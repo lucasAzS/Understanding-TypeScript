@@ -7,7 +7,7 @@ function add(n1: number, n2: number, showResult: boolean) {
 // here assigning types make that our code do not compile so that the mistake of adding a string and a number don't return a concatenation
 
 const number1 = 5; // to fix this we simply pass the right type
-const number2 = 2.8;
+const number2: number = 2.8; // we don't need to specify all types because ts can infere the type
 const printResult = true;
 
 //or convert to a number
