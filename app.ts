@@ -1,6 +1,8 @@
+type Combinable = string | number;
+
 function combine(
-  input1: number | string,
-  input2: number | string,
+  input1: Combinable,
+  input2: Combinable,
   resultConversion: 'as-number' | 'as-string'
 ) {
   let result;
