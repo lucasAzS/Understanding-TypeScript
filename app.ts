@@ -15,3 +15,12 @@ combineValues = add;
 
 // combineValues = 5; // Type 'number' is not assignable to type 'Function'.
 console.log(combineValues(3, 2));
+
+function addAndHandle(a: number, b: number, cb: (num: number) => void) {
+  const result = a + b;
+  cb(result);
+}
+
+addAndHandle(10, 30, (result) => {
+  console.log(result);
+});
