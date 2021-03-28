@@ -1,20 +1,14 @@
-var RoleEnum;
-(function (RoleEnum) {
-    RoleEnum[RoleEnum["ADMIN"] = 0] = "ADMIN";
-    RoleEnum[RoleEnum["READ_ONLY"] = 1] = "READ_ONLY";
-    RoleEnum[RoleEnum["AUTHOR"] = 2] = "AUTHOR";
-})(RoleEnum || (RoleEnum = {}));
-var person = {
-    name: 'Lucas',
-    age: 30,
-    hobbies: ['Sports', 'Music', 'Cooking'],
-    role: RoleEnum.ADMIN
-};
-console.log(person);
-for (var _i = 0, _a = person.hobbies; _i < _a.length; _i++) {
-    var hobby = _a[_i];
-    console.log(hobby.toUpperCase());
+function combine(input1, input2) {
+    var result;
+    if (typeof input1 === 'number' && typeof input2 === 'number') {
+        result = input1 + input2;
+    }
+    else {
+        result = input1.toString() + input2.toString();
+    }
+    return result;
 }
-if (person.role === RoleEnum.ADMIN) {
-    console.log('is an admin');
-}
+var combineAges = combine(30, 36);
+console.log(combineAges);
+var combineNames = combine('Lucas ', 'Azambuja');
+console.log(combineNames);

@@ -1,22 +1,16 @@
-enum RoleEnum {
-  ADMIN,
-  READ_ONLY,
-  AUTHOR,
+function combine(input1: number | string, input2: number | string) {
+  let result;
+  if (typeof input1 === 'number' && typeof input2 === 'number') {
+    result = input1 + input2;
+  } else {
+    result = input1.toString() + input2.toString();
+  }
+
+  return result;
 }
 
-const person = {
-  name: 'Lucas',
-  age: 30,
-  hobbies: ['Sports', 'Music', 'Cooking'],
-  role: RoleEnum.ADMIN,
-};
+const combineAges = combine(30, 36);
+console.log(combineAges);
 
-console.log(person);
-
-for (const hobby of person.hobbies) {
-  console.log(hobby.toUpperCase());
-}
-
-if (person.role === RoleEnum.ADMIN) {
-  console.log('is an admin');
-}
+const combineNames = combine('Lucas ', 'Azambuja');
+console.log(combineNames);
