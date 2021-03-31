@@ -4,7 +4,15 @@ class Departament {
   constructor(n: string) {
     this.name = n;
   }
+
+  decribe(this: Departament) {
+    console.log('Departament ' + this.name);
+  }
 }
 
 const accounting = new Departament('Accounting');
-console.log(accounting);
+accounting.decribe();
+
+// const accountingCopy = { name: 'wrong name :)', describe: accounting.decribe };
+
+// accountingCopy.describe(); // error
