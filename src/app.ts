@@ -3,7 +3,7 @@ class Departament {
   // private name: string;
   private employees: string[] = [];
 
-  constructor(public name: string, private id: string) {
+  constructor(public readonly name: string, private readonly id: string) {
     // short init
     // this.id = id;
     // this.name = n;
