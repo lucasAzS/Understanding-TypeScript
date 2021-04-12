@@ -1,7 +1,7 @@
 class Departament {
   // private id:string
   // private name: string;
-  private employees: string[] = [];
+  protected employees: string[] = [];
 
   constructor(public readonly name: string, private readonly id: string) {
     // short init
@@ -35,6 +35,14 @@ class AccountingDepartament extends Departament {
   constructor(id: string, private reports: string[]) {
     super(id, 'Accounting');
   }
+
+  addEmployee(name: string) {
+    if (name === 'Lucas') {
+      return console.log('this unit is already ours');
+    }
+    this.employees.push(name);
+  }
+
   addReport(text: string) {
     this.reports.push(text);
   }
@@ -44,7 +52,7 @@ class AccountingDepartament extends Departament {
   }
 }
 
-const t1 = new ITDepartament('t1', ['lucas', 'lulu']);
+const t1 = new ITDepartament('t1', ['Lucas', 'Lulu']);
 t1.addEmployee('Lucas');
 t1.addEmployee('Lulu');
 
@@ -61,5 +69,7 @@ const accounting = new AccountingDepartament('d2', []);
 
 accounting.addReport('Something happened...');
 accounting.printReports();
+
+accounting.addEmployee('Lucas');
 
 console.log('The Accounting dep: ', accounting);
