@@ -1,4 +1,5 @@
 class Departament {
+  static fiscalYear = 2021;
   // private id:string
   // private name: string;
   protected employees: string[] = [];
@@ -7,6 +8,10 @@ class Departament {
     // short init
     // this.id = id;
     // this.name = n;
+  }
+
+  static createEmployee(name: string) {
+    return { name };
   }
 
   decribe(this: Departament) {
@@ -22,6 +27,9 @@ class Departament {
     console.log(this.employees);
   }
 }
+
+const employee1 = Departament.createEmployee('Max');
+console.log(employee1, Departament.fiscalYear);
 
 class ITDepartament extends Departament {
   admins: string[]; /* Just to make clear that when using the constructor or use this. in 'child' class we need to use super() */
