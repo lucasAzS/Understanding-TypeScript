@@ -1,10 +1,10 @@
-class Departament {
+abstract class Departament {
   static fiscalYear = 2021;
   // private id:string
   // private name: string;
   protected employees: string[] = [];
 
-  constructor(public readonly name: string, private readonly id: string) {
+  constructor(protected readonly id: string, public readonly name: string) {
     // short init
     // this.id = id;
     // this.name = n;
@@ -14,9 +14,7 @@ class Departament {
     return { name };
   }
 
-  decribe(this: Departament) {
-    console.log(`Department (${this.id}) : ${this.name}`);
-  }
+  abstract decribe(this: Departament): void;
 
   addEmployee(employee: string) {
     this.employees.push(employee);
@@ -37,6 +35,10 @@ class ITDepartament extends Departament {
     super(id, 'IT');
     this.admins = admins;
   }
+
+  decribe() {
+    console.log('IT Departament - ID: ' + this.id);
+  }
 }
 
 class AccountingDepartament extends Departament {
@@ -44,6 +46,10 @@ class AccountingDepartament extends Departament {
   constructor(id: string, private reports: string[]) {
     super(id, 'Accounting');
     this.lastReport = reports[0];
+  }
+
+  decribe() {
+    console.log('Accouting Departament - ID: ' + this.id);
   }
 
   get mostRecentReport() {
@@ -99,3 +105,4 @@ accounting.printReports();
 accounting.addEmployee('Lucas');
 
 console.log('The Accounting dep: ', accounting);
+accounting.decribe();
