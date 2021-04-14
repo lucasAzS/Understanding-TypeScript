@@ -10,6 +10,8 @@ add = (n1: number, n2: number) => {
 
 interface Named {
   readonly name: string;
+  outputName?: string;
+  showOutput?: () => void;
 }
 interface Greetable extends Named {
   greet(phrase: string): void;
