@@ -1,34 +1,21 @@
-interface AddFn {
-  (a: number, b: number): number;
-}
-
-let add: AddFn;
-
-add = (n1: number, n2: number) => {
-  return n1 + n2;
+type Admin = {
+  name: string;
+  privileges: string[];
 };
 
-interface Named {
-  readonly name: string;
-  outputName?: string;
-  showOutput?: () => void;
-}
-interface Greetable extends Named {
-  greet(phrase: string): void;
-}
-
-class Person implements Greetable {
+type Employee = {
   name: string;
-  constructor(n: string, public age: number) {
-    this.name = n;
-  }
+  startDate: Date;
+};
 
-  greet(phrase: string) {
-    console.log(phrase + '' + this.name);
-  }
-}
+type ElevatedEmployee = Admin & Employee;
 
-let user1 = new Person('Lulucas', 26);
+const e1: ElevatedEmployee = {
+  name: 'Lucas',
+  privileges: ['shutdown-server'],
+  startDate: new Date(),
+};
 
-user1.greet('Hi my name is ');
-user1.name = 'roberto'; // the name is not changed bcs is read-only
+type Combinable = string | number;
+type Numeric = number | boolean;
+type Universal = Combinable & Numeric; // universal is typed number bcs number intersect both types
