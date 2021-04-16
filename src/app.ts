@@ -69,7 +69,7 @@ v1.drive();
 // in obj born from a class we can use the instanceof "guard":
 if (v1 instanceof Truck) v1.loadCargo(1000);
 
-//When or interfaces have a field that is similar but not the same we use a type 'discriminator':
+//When our interfaces have a field that is similar but not the same we use a type 'discriminator':
 interface Bird {
   //We put a type prop in our interface and give it a string value:
   type: 'bird';
@@ -97,3 +97,12 @@ function moveAnimal(animal: Animal) {
   }
   console.log('moving at speed:' + speed);
 }
+
+// Type casting
+// we select the element here:
+const input = document.getElementById('user-input') as HTMLInputElement;
+//but as we getElementById we receive a generic type called HTMLElement
+//HTMLElement represents any html element so we don't have access to input methods
+// for that we need to cast the type using "as" + the type that we want
+// so now we have the input's methods
+input.value = 'Hi there!!';
