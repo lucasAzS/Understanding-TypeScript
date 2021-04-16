@@ -66,5 +66,34 @@ const v1: Vehicle = new Truck();
 // here works bcs both have the method drive().
 v1.drive();
 // for this one we need a Guard type:
+// in obj born from a class we can use the instanceof "guard":
 if (v1 instanceof Truck) v1.loadCargo(1000);
-// in obj born from a class we can use the instanceof "guard".
+
+//When or interfaces have a field that is similar but not the same we use a type 'discriminator':
+interface Bird {
+  //We put a type prop in our interface and give it a string value:
+  type: 'bird';
+  flyingSpeed: number;
+}
+
+interface Horse {
+  type: 'horse';
+  runningSpeed: number;
+}
+
+type Animal = Bird | Horse;
+
+function moveAnimal(animal: Animal) {
+  let speed;
+  switch (animal.type) {
+    case 'bird':
+      speed = animal.flyingSpeed;
+      break;
+    case 'horse':
+      speed = animal.runningSpeed;
+      break;
+    default:
+      break;
+  }
+  console.log('moving at speed:' + speed);
+}
