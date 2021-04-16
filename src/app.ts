@@ -20,6 +20,13 @@ type Combinable = string | number;
 type Numeric = number | boolean;
 type Universal = Combinable & Numeric; // universal is typed number bcs number intersect both types.
 
+// Function Overload
+// We use overloads when we want to specify what we be the return of the fn
+// with different combinations of calls
+function add(a: number, b: number): number;
+function add(a: string, b: string): string;
+function add(a: string, b: number): string;
+function add(a: number, b: string): string;
 function add(a: Combinable, b: Combinable) {
   // A type "Guard" make sure that we work correctly with our types.
   if (typeof a === 'string' || typeof b === 'string') {
