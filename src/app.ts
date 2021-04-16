@@ -69,6 +69,7 @@ v1.drive();
 // in obj born from a class we can use the instanceof "guard":
 if (v1 instanceof Truck) v1.loadCargo(1000);
 
+//Type Discriminator
 //When our interfaces have a field that is similar but not the same we use a type 'discriminator':
 interface Bird {
   //We put a type prop in our interface and give it a string value:
@@ -106,3 +107,19 @@ const input = document.getElementById('user-input') as HTMLInputElement;
 // for that we need to cast the type using "as" + the type that we want
 // so now we have the input's methods
 input.value = 'Hi there!!';
+
+// Index Props
+// When we need to create a flexible object
+interface ErrorsContainer {
+  // here we say that the props of the obj need to have the value string
+  // id: string //We can add some pre determined fields and how more we need, but the values must be strings
+  [prop: string]: string;
+}
+
+const errorBag: ErrorsContainer = {
+  email: 'Not a Valid email',
+  username: 'Must have 3 characters',
+  //id: 1 // not valid
+  1: 'This is ok, bcs we can convert 1 to "1"',
+};
+console.log(errorBag.email);
