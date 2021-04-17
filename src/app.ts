@@ -38,3 +38,35 @@ function extractAndDescribe<T extends object, U extends keyof T>(
   return 'Value ' + obj[key];
 }
 console.log(extractAndDescribe({ name: 'lucas' }, 'name'));
+
+// Generic Classes
+// in this case we can use a generic any primitive type with good support of ts
+class DataStorage<T extends string | number | boolean> {
+  private data: T[] = [];
+
+  addItem(item: T) {
+    this.data.push(item);
+  }
+
+  removeItem(item: T) {
+    if (this.data.indexOf(item) === -1) {
+      return;
+    }
+    this.data.splice(this.data.indexOf(item), 1);
+  }
+
+  getItem() {
+    return [...this.data];
+  }
+}
+
+const stringStorage = new DataStorage<string>();
+
+stringStorage.addItem('Lucas');
+stringStorage.addItem('Azambuja');
+
+stringStorage.removeItem('Lucas');
+console.log(stringStorage.getItem());
+
+const numberStorage = new DataStorage<number>();
+numberStorage.addItem(123456);
