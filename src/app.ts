@@ -9,3 +9,22 @@ function merge<T extends object, U extends object>(objA: T, objB: U) {
 const mergedObj1 = merge({ name: 'Lucas' }, { age: 26 });
 
 console.log(mergedObj1.name);
+
+// Generic Function 2
+interface Lengthy {
+  length: number;
+}
+// here we don't care what element is, but he will need to have a length prop
+// generics with constraints give us a controlled flexibility
+function countAndDescribe<T extends Lengthy>(element: T): [T, string] {
+  let describeText = 'Got no value';
+  if (element.length === 1) {
+    describeText = 'Got 1 element';
+  } else if (element.length > 1) {
+    describeText = 'Got ' + element.length + ' elements';
+  }
+
+  return [element, describeText];
+}
+
+console.log(countAndDescribe('Hi my name is Lucas'));
