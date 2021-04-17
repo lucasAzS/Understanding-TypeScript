@@ -130,3 +130,25 @@ const errorBag: ErrorsContainer = {
   1: 'This is ok, bcs we can convert 1 to "1"',
 };
 console.log(errorBag.email);
+
+// Optional Chaining
+//
+const fetchedUserData = {
+  id: 345,
+  name: 'Carl',
+  job: {
+    title: 'CEO',
+  },
+};
+// In this case ts knows that job don't exist
+// but in the case of a data thats is fetched and ts cannot know if the prop exist
+// we can use de ? simbol after the name of the obj
+//or method that we don't know for certain that is not undefined
+console.log(fetchedUserData?.job?.title);
+
+// Nullish Coalescing
+
+const userInput = undefined || null;
+// the ?? simbol let us use a default value for undefined or null
+const storedUserInput = userInput ?? 'Not initialized';
+console.log('storedUserInput: ', storedUserInput);
