@@ -28,3 +28,13 @@ function countAndDescribe<T extends Lengthy>(element: T): [T, string] {
 }
 
 console.log(countAndDescribe('Hi my name is Lucas'));
+
+// Keyof Constraint
+// here we say that one of the params is an obj and the other must be a key of that obj
+function extractAndDescribe<T extends object, U extends keyof T>(
+  obj: T,
+  key: U
+) {
+  return 'Value ' + obj[key];
+}
+console.log(extractAndDescribe({ name: 'lucas' }, 'name'));
