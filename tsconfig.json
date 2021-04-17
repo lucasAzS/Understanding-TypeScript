@@ -70,8 +70,8 @@
   },
   "exclude": [
     "node_modules",
-    "src/basic-types/*",
-    "src/classes&interfaces/*",
-    "src/adv-types/*"
+    "src/1-basic-types/*",
+    "src/3-classes&interfaces/*",
+    "src/2-adv-types/*"
   ]
 }
