@@ -38,12 +38,23 @@ function Log(target: any, propName: string | symbol) {
   console.log(target, propName);
 }
 
+function Log3(
+  target: any,
+  name: string | symbol,
+  descriptor: PropertyDescriptor
+) {
+  console.log('Method Decorator');
+  console.log(target);
+  console.log(name);
+  console.log(descriptor);
+}
 class Product {
   @Log
   title: string;
   constructor(t: string, private _price: number) {
     this.title = t;
   }
+  @Log3
   set price(val: number) {
     if (val < 0) {
       this._price = val;
@@ -52,3 +63,28 @@ class Product {
 }
 
 const p1 = new Person();
+
+function Autobind(_: any, _2: string, descriptor: PropertyDescriptor) {
+  const originalMethod = descriptor.value;
+  const adjDescriptor: PropertyDescriptor = {
+    configurable: true,
+    enumerable: false,
+    get() {
+      const boundFn = originalMethod.bind(this);
+      return boundFn;
+    },
+  };
+  return adjDescriptor;
+}
+class Printer {
+  message = 'This Works :)';
+
+  @Autobind
+  showMessage() {
+    console.log(this.message);
+  }
+}
+
+const p = new Printer();
+const button = document.querySelector('button')!;
+button.addEventListener('click', p.showMessage);
