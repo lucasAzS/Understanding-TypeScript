@@ -63,10 +63,38 @@ class ProjectInput {
     this.configure();
     this.attach();
   }
+
+  // Fetching user input
+  // using a tuple to return exactly an array with three values
+  private getUserInput(): [string, string, number] | void {
+    //storing the values of our inputs
+    const enteredTitle = this.titleInputElement.value;
+    const enteredDescription = this.descriptionInputElement.value;
+    const enteredPeople = this.peopleInputElement.value;
+    // simply validation if is not empty
+    if (
+      enteredTitle.trim().length === 0 ||
+      enteredDescription.trim().length === 0 ||
+      enteredPeople.trim().length === 0
+    ) {
+      alert('Invalid input, please try again');
+      return;
+    }
+    //returning our values as an array of const
+    return [enteredTitle, enteredDescription, +enteredPeople];
+  }
+
   @autobind // here we apply the decorator and don't need to use the bind in the listener
   private submitHandler(event: Event) {
     event.preventDefault();
-    console.log(this.titleInputElement.value);
+
+    // we store the values returned from the getUserInput fn
+    const userInput = this.getUserInput();
+    // a js validation to se if user input is an array
+    if (Array.isArray(userInput)) {
+      const [title, desc, people] = userInput;
+      console.log(title, desc, people);
+    }
   }
 
   private configure() {
