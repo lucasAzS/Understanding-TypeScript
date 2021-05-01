@@ -1,3 +1,22 @@
+// Autobind Decorator
+// a method decorator takes 3 parameters the target, the methodName and the descriptor of the method that will be applied
+function autobind(
+  target: any,
+  methodName: string,
+  descriptor: PropertyDescriptor
+) {
+  const originalMethod = descriptor.value;
+  // we replace the original descriptor with one that has a get function that autobind the this keyword to the original method that the decorator will be applied
+  const newDescriptor: PropertyDescriptor = {
+    configurable: true,
+    get() {
+      const boundFn = originalMethod.bind(this);
+      return boundFn;
+    },
+  };
+  return newDescriptor;
+}
+
 // DOM Element Selection and OOP Rendering
 class ProjectInput {
   //  we must say that the type of this field is a template element
@@ -44,7 +63,7 @@ class ProjectInput {
     this.configure();
     this.attach();
   }
-
+  @autobind // here we apply the decorator and don't need to use the bind in the listener
   private submitHandler(event: Event) {
     event.preventDefault();
     console.log(this.titleInputElement.value);
@@ -52,8 +71,8 @@ class ProjectInput {
 
   private configure() {
     // adding an listener for the submission of the form
-    // we have to make a bind for the this
-    this.element.addEventListener('submit', this.submitHandler.bind(this));
+    // we have to make a bind for the this or use our autobind decorator
+    this.element.addEventListener('submit', this.submitHandler);
   }
 
   private attach() {
