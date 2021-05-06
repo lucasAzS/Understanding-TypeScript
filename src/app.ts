@@ -1,3 +1,57 @@
+// Creating a Re-Usable validation
+
+// a interface of an obj that can be validated
+interface Validatable {
+  value: string | number;
+  required?: boolean;
+  minLength?: number;
+  maxLength?: number;
+  min?: number;
+  max?: number;
+}
+// our function to validate
+function validate(validatableInput: Validatable) {
+  // in the beggining we set to true but after any value that is false we change it
+  let isValid = true;
+  // we check if the field is required
+  if (validatableInput.required) {
+    // isValid && will make sure that if the second value is false itself will became false
+    isValid = isValid && validatableInput.value.toString().trim().length !== 0;
+  }
+  // here we check if it is a string and it is not empty
+  if (
+    typeof validatableInput.value === 'string' &&
+    validatableInput.minLength != null
+  ) {
+    isValid =
+      isValid && validatableInput.value.length > validatableInput.minLength;
+  }
+  if (
+    typeof validatableInput.value === 'string' &&
+    validatableInput.maxLength != null
+  ) {
+    isValid =
+      isValid && validatableInput.value.length < validatableInput.maxLength;
+  }
+  // here we check if is not empty and it is a number
+  if (
+    validatableInput.min != null &&
+    typeof validatableInput.value === 'number'
+  ) {
+    // we check if it is lower that the min value
+    isValid = isValid && validatableInput.value > validatableInput.min;
+  }
+
+  if (
+    validatableInput.max != null &&
+    typeof validatableInput.value === 'number'
+  ) {
+    // we check if it is bigger than the max value
+    isValid = isValid && validatableInput.value <= validatableInput.max;
+  }
+  return isValid;
+}
+
 // Autobind Decorator
 // a method decorator takes 3 parameters the target, the methodName and the descriptor of the method that will be applied
 function autobind(
@@ -71,17 +125,42 @@ class ProjectInput {
     const enteredTitle = this.titleInputElement.value;
     const enteredDescription = this.descriptionInputElement.value;
     const enteredPeople = this.peopleInputElement.value;
-    // simply validation if is not empty
+
+    //here we create the obj's that will be validated
+    const titleValidatable: Validatable = {
+      value: enteredTitle,
+      required: true,
+    };
+    const descValidatable: Validatable = {
+      value: enteredDescription,
+      required: true,
+      minLength: 5,
+    };
+    const popValidatable: Validatable = {
+      value: +enteredPeople,
+      required: true,
+      min: 1,
+      max: 5,
+    };
+
+    // now we use a better validation
     if (
-      enteredTitle.trim().length === 0 ||
-      enteredDescription.trim().length === 0 ||
-      enteredPeople.trim().length === 0
+      !validate(titleValidatable) ||
+      !validate(descValidatable) ||
+      !validate(popValidatable)
     ) {
       alert('Invalid input, please try again');
       return;
     }
     //returning our values as an array of const
     return [enteredTitle, enteredDescription, +enteredPeople];
+  }
+
+  // clearing the inputs after are submitted
+  private clearInputs() {
+    this.titleInputElement.value = '';
+    this.descriptionInputElement.value = '';
+    this.peopleInputElement.value = '';
   }
 
   @autobind // here we apply the decorator and don't need to use the bind in the listener
@@ -94,6 +173,7 @@ class ProjectInput {
     if (Array.isArray(userInput)) {
       const [title, desc, people] = userInput;
       console.log(title, desc, people);
+      this.clearInputs();
     }
   }
 

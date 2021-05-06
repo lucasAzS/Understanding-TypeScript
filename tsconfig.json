@@ -71,7 +71,9 @@
   "exclude": [
     "node_modules",
     "src/1-basic-types/*",
+    "src/2-adv-types/*",
     "src/3-classes&interfaces/*",
-    "src/2-adv-types/*"
+    "src/4-generics/*",
+    "src/5-decorators/*"
   ]
 }
