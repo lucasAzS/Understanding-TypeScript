@@ -1,3 +1,40 @@
+//Project State Management
+class ProjectState {
+  private listeners: any[] = [];
+  private projects: any[] = [];
+  private static instance: ProjectState;
+
+  private constructor() {}
+
+  static getInstance() {
+    // here we use the singleton obj that will be created one time and be always returned
+    if (this.instance) {
+      return this.instance;
+    }
+    this.instance = new ProjectState();
+    return this.instance;
+  }
+
+  addListener(listenerFn: Function) {
+    this.listeners.push(listenerFn);
+  }
+
+  addProject(title: string, desc: string, numOfPop: number) {
+    const newProject = {
+      id: Math.random().toString(),
+      title,
+      desc,
+      pop: numOfPop,
+    };
+    this.projects.push(newProject);
+    for (const listenerFn of this.listeners) {
+      listenerFn(this.projects.slice());
+    }
+  }
+}
+
+const projectState = ProjectState.getInstance();
+
 // Creating a Re-Usable validation
 
 // a interface of an obj that can be validated
@@ -77,6 +114,7 @@ class ProjectList {
   templateElement: HTMLTemplateElement;
   hostElement: HTMLDivElement;
   element: HTMLElement;
+  assignedProj: any[];
 
   constructor(private type: 'active' | 'finished') {
     //we copy the constructor of the other class and make a fell changes
@@ -84,16 +122,33 @@ class ProjectList {
       'project-list'
     )! as HTMLTemplateElement;
     this.hostElement = document.getElementById('app')! as HTMLDivElement;
+    this.assignedProj = [];
+
     const importedNode = document.importNode(
       this.templateElement.content,
       true
     );
     this.element = importedNode.firstElementChild as HTMLElement;
     this.element.id = `${this.type}-projects`; //here the id is a little dinamic
+
+    projectState.addListener((projects: any[]) => {
+      this.assignedProj = projects;
+      this.renderProjects();
+    });
+
     this.attach();
     this.renderContent();
   }
-
+  private renderProjects() {
+    const listEl = document.getElementById(
+      `${this.type}-projects-list`
+    )! as HTMLUListElement;
+    for (const projItem of this.assignedProj) {
+      const listItem = document.createElement('li');
+      listItem.textContent = projItem.title;
+      listEl?.appendChild(listItem);
+    }
+  }
   private renderContent() {
     const listId = `${this.type}-projects-list`;
     this.element.querySelector('ul')!.id = listId;
@@ -207,13 +262,14 @@ class ProjectInput {
     // a js validation to se if user input is an array
     if (Array.isArray(userInput)) {
       const [title, desc, people] = userInput;
-      console.log(title, desc, people);
+      // here we pass the values of the inputs for our global state
+      projectState.addProject(title, desc, people);
       this.clearInputs();
     }
   }
 
   private configure() {
-    // adding an listener for the submission of the form
+    // adding a listener for the submission of the form
     // we have to make a bind for the this or use our autobind decorator
     this.element.addEventListener('submit', this.submitHandler);
   }
